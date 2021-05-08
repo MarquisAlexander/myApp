@@ -8,16 +8,22 @@ import styles from './styles';
 
 export default function Input({
     placeHolder,
-    onChangeText
+    onChangeText,
+    value,
+    keyboardType,
+    ...props
 }) {
 
     return (
         <View style={styles.container}>
             <TextInput
+                value={value}
                 style={styles.input}
-                placeholderTextColor="red"
+                placeholderTextColor="#9C9C9C"
+                keyboardType={keyboardType}
                 placeholder={placeHolder}
                 onChangeText={onChangeText}
+                {...props}
             />
         </View>
     )

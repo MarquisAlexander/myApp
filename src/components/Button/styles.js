@@ -7,13 +7,18 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingHorizontal: 10,
+        // borderWidth: 1,
+        borderColor: "#000",
+        borderRadius: 5,
+        marginTop: 5,
+        width: '100%',
+        height: 55,
         alignItems: 'center',
-        width: width,
-        height: height,
-        justifyContent: 'space-evenly'
+        justifyContent: 'center'
     },
+    title: {
+        color: '#fff'
+    }
 })
 
 export default styles;

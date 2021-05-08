@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         alignItems: 'center',
         width: width,
-        height: height,
-        justifyContent: 'space-evenly'
     },
 })
 

@@ -1,34 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
+    Alert
 } from 'react-native';
 import {Input, Button} from '../../components';
+import {useDispatch} from 'react-redux';
+import {setToken} from '../../store/modules/user/actions';
 
 import styles from './styles';
+import api from '../../services/api';
 
-function Login({navigation}) {
+const Login = ({navigation}) => {
+    const dispatch = useDispatch();
 
-    function handleLogin(event) {
-        console.log('dentro da função', event)
-    }
+    const [data, setData] = useState({
+        password: '',
+        username: '',
+    });
+
+    const handleLogin = () => {
+        console.log(data);
+        
+        api
+            .post('auth/login',data)
+            .then((resp) => {
+                console.log(resp.headers.authorization)
+                dispatch(setToken(resp.headers.authorization));
+                // api.defaults.headers.Authorization = `Bearer ${resp.headers.authotization}`;
+                Alert.alert('Sucesso')
+                navigation.navigate('list');
+            })
+            .catch((err) => {
+                console.log(err)
+                Alert.alert('Erro ao fazer login')
+            })
+        }
 
     return (
         <View style={styles.container}>
-            <Text>Fazer login</Text>
+            <View style={{
+                // height: 30,
+                // flex:1
+            }}>
+                <Text>Fazer login</Text>
+            </View>
+            
+            <View style={{
+                // flex: 1,
+                width: '100%',
+            }}>
                 <Input 
+                    value={data.username}
                     placeHolder='User'
-                    onChangeText={event => handleLogin(event)}
+                    onChangeText={(text) => setData({...data, username: text})}
                 />
                 <Input 
+                    value={data.password}
                     placeHolder='Password'
-                    onChangeText={event => handleLogin(event)}
+                    onChangeText={(text) => setData({...data, password: text})}
                 />
 
                 <Button
                     title="Entrar"
-                    nameScreen="list"
+                    onPress={handleLogin}
+                    backgroundColor="green"
                 />
+            </View>
         </View>
     )
 }

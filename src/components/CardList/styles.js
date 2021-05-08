@@ -7,11 +7,15 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingHorizontal: 10,
+        // borderWidth: 1,
+        // flex: 1,
+        // borderColor: "#000",
+        // borderRadius: 5,
+        marginTop: 30,
+        // width: width,
+        // height: 55,
         // alignItems: 'center',
-        width: width,
-        marginTop: 20
+        // justifyContent: 'center'
     },
 })
 
