@@ -4,6 +4,7 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
+import colors from '../../utils/colors';
 import styles from './styles';
 
 export default function CardList({
@@ -16,29 +17,20 @@ export default function CardList({
 
     return (
         <TouchableOpacity style={styles.container}>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                // flex: 1
-            }}>
-                <Text>Nome: {title} </Text>
-                <Text>Preço: {price}</Text>
+            <View style={styles.containerContent}>
+                <Text style={styles.text}>Nome: {title} </Text>
+                <Text style={styles.text}>Preço: {price}</Text>
             </View>
 
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-            }}>
-                <Text>Nome</Text>
-                <Text>Quantidade</Text>
+            <View style={styles.containerContent}>
+                <Text style={styles.text}>Ingredientes</Text>
+                <Text style={styles.text}>Quantidade</Text>
             </View>
+            
             {ingredients.map((item) => (
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
-                }}>
-                    <Text>{item.name}</Text>
-                    <Text>{item.quantity}</Text>
+                <View style={styles.containerContent}>
+                    <Text style={styles.text}>{item.name}</Text>
+                    <Text style={styles.text}>{item.quantity}</Text>
                 </View>
             ))}
 
@@ -48,7 +40,7 @@ export default function CardList({
                 <TouchableOpacity 
                     onPress={onPressX}
                     style={{
-                        backgroundColor: 'red',
+                        backgroundColor: colors.delete,
                         padding: 10,
                         flex:1
                     }}
@@ -61,7 +53,7 @@ export default function CardList({
                 <TouchableOpacity 
                     onPress={onPressX}
                     style={{
-                        backgroundColor: 'blue',
+                        backgroundColor: colors.green,
                         padding: 10,
                         flex:1
 

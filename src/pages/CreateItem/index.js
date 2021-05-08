@@ -12,9 +12,9 @@ import {useSelector} from 'react-redux';
 
 import styles from './styles';
 import api from '../../services/api';
+import colors from '../../utils/colors';
 
 const CreateItem = ({navigation}) => {
-    // const dispatch = useDispatch();
     const [ingredientes, setIngredientes] = useState(false);
     const [updateList, setUpdateList] = useState(false);
 
@@ -61,7 +61,7 @@ const CreateItem = ({navigation}) => {
     return (
         <ScrollView>
         <View style={styles.container}>
-            <Text>Cadastrar item</Text>
+            <Text style={styles.title}>Cadastrar item</Text>
                 <Input 
                     value={data}
                     placeHolder='Url imagem'
@@ -82,39 +82,30 @@ const CreateItem = ({navigation}) => {
 
                 <TouchableOpacity
                     onPress={() => setIngredientes(!ingredientes)}
-                    style={{
-                        flexDirection: 'row',
-                        width: '100%',
-                        justifyContent: 'space-between'
-                    }}
+                    style={styles.containerButtonAddIngredients}
                 >
-                    <Text>Adicionar ingrediente</Text>
-                    <Text>+</Text>
+                    <Text style={styles.textAddIngredients}>Adicionar ingrediente</Text>
+                    <Text style={styles.textAddIngredients}>+</Text>
                 </TouchableOpacity>
-
+               
+               {data.ingredients.length > 0 &&
+                    <View style={styles.containerIngredients}>
+                        <Text>Ingredientes</Text>
+                        <Text>Quantidades</Text>
+                        <Text>Custo R$</Text>
+                    </View>
+               }
                 <FlatList 
                     data={data.ingredients}
                     extraData={updateList}
                     renderItem={({item}) => (
-                        <View>
-                            <Text>{item.cost}</Text>
+                        <View style={styles.containerIngredients}>
                             <Text>{item.name}</Text>
                             <Text>{item.quantity}</Text>
+                            <Text>{item.cost}</Text>
                         </View>
                         )}
                     />
-
-                {/* {data.ingredients > 0 ?
-                    <FlatList 
-                    data={data.ingredients}
-                    renderItem={({item}) => (
-                        <Text>ola</Text>
-                        )}
-                    />
-           
-                :
-                    null
-                } */}
 
                 {
                     ingredientes ?
@@ -165,6 +156,7 @@ const CreateItem = ({navigation}) => {
                         <Button
                             title="Adicionar"
                             onPress={saveIngrediente}
+                            backgroundColor={colors.green}
                         />
                     </>
                     :
@@ -173,6 +165,7 @@ const CreateItem = ({navigation}) => {
                 <Button
                     title="Salvar"
                     onPress={handleCreateItem}
+                    backgroundColor={colors.green}
                 />
         </View>
         </ScrollView>

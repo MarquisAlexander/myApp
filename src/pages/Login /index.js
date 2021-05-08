@@ -10,6 +10,7 @@ import {setToken} from '../../store/modules/user/actions';
 
 import styles from './styles';
 import api from '../../services/api';
+import colors from '../../utils/colors';
 
 const Login = ({navigation}) => {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const Login = ({navigation}) => {
                 <Button
                     title="Entrar"
                     onPress={handleLogin}
-                    backgroundColor="green"
+                    backgroundColor={colors.green}
                 />
             </View>
         </View>

@@ -2,6 +2,7 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native'
+import colors from '../../utils/colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     title: {
-        color: '#fff'
+        color: colors.white,
     }
 })
 

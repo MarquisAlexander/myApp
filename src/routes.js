@@ -15,15 +15,15 @@ function Routes() {
                     headerShown: false
                 }}
             >
-
-<Stack.Screen 
-                    name="list" 
-                    component={List} 
-                />
                 <Stack.Screen 
                     name="home" 
                     component={Login}
                 />
+                <Stack.Screen 
+                    name="list" 
+                    component={List} 
+                />
+
 
                 <Stack.Screen 
                     name="createItem" 
