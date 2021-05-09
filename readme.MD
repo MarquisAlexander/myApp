@@ -13,6 +13,9 @@
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [ReactNative](https://reactnative.dev/)
+- [Redux](https://redux.js.org/)
+- [Axios](https://github.com/axios/axios)
+- [AsyncStorage](https://github.com/react-native-async-storage/async-storage)
 
 ## 🤔 Informações
 
@@ -20,7 +23,7 @@ Esse projeto é um desafio prático para uma vaga de desenvolvedor, e tem como o
 
 ## 🖼 Layout
 <p align="center">
-<img src="https://user-images.githubusercontent.com/51330232/113130599-a027ad00-91f2-11eb-82de-146309b7ea75.png">
+<img src="https://user-images.githubusercontent.com/51330232/117590372-92c0e500-b105-11eb-9938-b4985b47e081.jpg">
 </p>
 
 - [Baixar Apk]()

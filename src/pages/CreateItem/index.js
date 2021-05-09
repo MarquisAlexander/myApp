@@ -81,7 +81,7 @@ const CreateItem = ({navigation, route}) => {
       api
         .post('product/save', data, {
           headers: {
-            authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`,
+            authorization: token,
           },
         })
         .then(resp => {
@@ -112,7 +112,9 @@ const CreateItem = ({navigation, route}) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView 
+      keyboardShouldPersistTaps='handled'
+    >
       <View style={styles.container}>
         <Input
           value={data.image}

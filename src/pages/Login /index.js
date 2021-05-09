@@ -38,8 +38,8 @@ const Login = ({navigation}) => {
                 .then((resp) => {
                     dispatch(setToken(resp.headers.authorization));
                     dispatch(setUser(resp.data.name));
-                    // api.defaults.headers.Authorization = `Bearer ${resp.headers.authotization}`;
                     Alert.alert('Sucesso')
+                    // api.defaults.headers.Authorization = `Bearer ${resp.headers.authorization}`;
                     navigation.navigate('list');
                 })
                 .catch((err) => {
