@@ -18,6 +18,8 @@ const CreateItem = ({navigation, route}) => {
     const [ingredientes, setIngredientes] = useState(false);
     const [updateList, setUpdateList] = useState(false);
     const [control, setControl] = useState(false);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const { token } = useSelector(store => store.user);
 
@@ -71,27 +73,44 @@ const CreateItem = ({navigation, route}) => {
         }
 
     const handleCreateItem = () => {
+
+       setError(true)
+       setLoading(true)
        console.log('dentro', data)
-       
-       api
-       .post('product/save',data, {
-           headers: {
-            authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`
-           }
-       })
-       .then((resp) => {
-           console.log('produto cadastrado')
-           Alert.alert('Sucesso')
-           navigation.navigate('list');
-       }).catch((err) => {
-           Alert.alert('Erro ao salvar edição :(')
-       })
+
+       if (!data.name || !data.price || !data.ingredients) {
+            setLoading(false)
+            return;
+       } else {
+            api
+            .post('product/save',data, {
+                headers: {
+                    authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`
+                }
+            })
+            .then((resp) => {
+                console.log('produto cadastrado')
+                Alert.alert('Sucesso')
+                navigation.navigate('list');
+            }).catch((err) => {
+                Alert.alert('Erro ao salvar edição :(')
+            }).finally(() => {
+                   setLoading(false)
+            })
+        }
+
     }
 
     const saveIngrediente = () => {
        console.log('adicionar', ingrediente)
        data.ingredients.push(ingrediente)
        console.log(data.ingredients)
+       setIngrediente({
+            cost: 0,
+            id: 0,
+            name: '',
+            quantity: 0
+       })
        setUpdateList(!updateList)
     }
 
@@ -103,16 +122,22 @@ const CreateItem = ({navigation, route}) => {
                     value={data.image}
                     placeHolder='Url imagem'
                     onChangeText={(text) => setData({...data, image: text})}
+                    error={error}
+                    placeHolderError="Você esqueceu da imagem"
                 />
                 <Input 
                     value={data.name}
                     placeHolder='Nome'
                     onChangeText={(text) => setData({...data, name: text})}
+                    error={error}
+                    placeHolderError="Você esqueceu do nome"
                 />
                 <Input 
                     value={data.price}
                     placeHolder='Preço'
                     keyboardType='numeric'
+                    error={error}
+                    placeHolderError="Você esqueceu do preço"
                     onChangeText={(text) => setData({...data, price: text})}
                 />
 
@@ -143,18 +168,20 @@ const CreateItem = ({navigation, route}) => {
                         )}
                     />
 
+                {error && <View><Text>Você precisa adicionar pelo menos um ingrediente</Text></View>}
+
                 {
                     ingredientes ?
                     <>
                         <Input 
-                            value={ingrediente}
+                            value={ingrediente.name}
                             placeHolder='Nome'
                             onChangeText={(text) => setIngrediente({...ingrediente,
                                 name: text,
                             })}
                         />
                         <Input 
-                            value={ingrediente}
+                            value={ingrediente.cost}
                             keyboardType='numeric'
                             placeHolder='Custo'
                             onChangeText={(text) => setIngrediente({...ingrediente,
@@ -201,6 +228,7 @@ const CreateItem = ({navigation, route}) => {
                 <Button
                     title="Salvar"
                     onPress={handleCreateItem}
+                    loading={loading}
                     backgroundColor={colors.green}
                 />
         </View>
