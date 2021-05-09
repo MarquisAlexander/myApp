@@ -3,6 +3,7 @@ export default {
     red: '#D00000',
     green: '#11DF68',
     delete: '#DB3838',
+    textSecondary: '#9C9C9C',
     
 
     lighter: '#EEE',
@@ -20,7 +21,6 @@ export default {
     darkTransparent: 'rgba(0,0,0,0.6)',
     whiteTransparent: 'rgba(255,255,255,0.3)',
     textPrimary: '#858585',
-    textSecondary: '#9C9C9C',
     cinzaPrincipal: 'rgba(112,112,112,1)',
     cinzaClaro: '#EFEFEF',
     listBackground: '#F6F6F6',

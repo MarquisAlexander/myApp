@@ -4,24 +4,27 @@ import {
     Text,
     TextInput,
 } from 'react-native';
+import colors from '../../utils/colors';
 import styles from './styles';
 
 export default function Input({
     placeHolder,
+    placeHolderError,
     onChangeText,
     value,
     keyboardType,
+    error,
     ...props
 }) {
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {borderColor: error ? colors.delete : colors.textSecondary}]}>
             <TextInput
                 value={value}
                 style={styles.input}
-                placeholderTextColor="#9C9C9C"
+                placeholderTextColor={error ? colors.delete : colors.textSecondary }
                 keyboardType={keyboardType}
-                placeholder={placeHolder}
+                placeholder={error ? placeHolderError : placeHolder}
                 onChangeText={onChangeText}
                 {...props}
             />
