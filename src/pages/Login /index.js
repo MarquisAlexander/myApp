@@ -28,6 +28,9 @@ const Login = ({navigation}) => {
         if (!data.password || !data.username) {
             setError(true);
             setLoading(false)
+            setTimeout(() => {
+                setError(false);
+            }, 1000);
         } else {
             setError(false);
             api

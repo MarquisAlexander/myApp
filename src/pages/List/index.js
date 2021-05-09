@@ -15,7 +15,7 @@ import {CardList} from '../../components';
 import colors from '../../utils/colors';
 
 function List({navigation}) {
-  const {token} = useSelector(store => store.user);
+  const {token, user} = useSelector(store => store.user);
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalpages, setTotalPages] = useState(0);
@@ -23,6 +23,7 @@ function List({navigation}) {
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(true);
   var page = 0;
 
   useEffect(() => {
@@ -115,19 +116,20 @@ function List({navigation}) {
           height: 60,
           alignItems: 'center',
         }}>
-        <Text>Olá Marquis!</Text>
+        <Text>Olá {user}, Bem vindo!</Text>
         <TouchableOpacity
             onPress={() => navigation.navigate('home')}
         >
           <Text>SAIR</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.container}>
+
       {items.length === 0 && !loading && (
         <View>
           <Text>Nada encontrado</Text>
         </View>
       )}
-      <View style={styles.container}>
         <FlatList
           data={items}
           onEndReached={() => chegandoNoFinal()}
@@ -144,6 +146,11 @@ function List({navigation}) {
               onPressEdit={() => handleEdit(item)}
             />
           )}
+          ListFooterComponent={
+            loadingMore ?
+            <ActivityIndicator color={colors.green} size={30}/>
+            : <></>
+          }
         />
       </View>
       <Button
