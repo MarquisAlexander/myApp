@@ -51,7 +51,7 @@ export default function CardList({
                     }}>X</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={onPressX}
+                    onPress={onPressEdit}
                     style={{
                         backgroundColor: colors.green,
                         padding: 10,

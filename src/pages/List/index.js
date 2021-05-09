@@ -23,8 +23,12 @@ function List({navigation}) {
   var page = 0;
 
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
         loadList();
-    }, [])
+        });
+        
+        return unsubscribe;
+    }, [navigation])
 
     const loadList = () => {
         if (page < totalpages) {
@@ -38,7 +42,7 @@ function List({navigation}) {
         api
             .get(`product/list?page=${page}`, {
                 headers: {
-                    authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA1Mjg0MTgsImlhdCI6MTYyMDQ4NTIxOH0.2ppNusxsbQ1in1PYLuRPPkVtQ37kYuA2ieK6Leg9LpGNEMbW8gUvsBYHhDuME5akExn4IS5s660vnbLGFneZeQ`
+                    authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`
                 }
             })
             .then((resp) => {
@@ -47,13 +51,24 @@ function List({navigation}) {
                 setTotalPages(resp.data.totalPages)
 
                 if (page !== 0) {
-                    console.log('antes',items)
-                    items.push(resp.data.content)
-                    console.log('depois',items)
-                    setControl(!control)
+                    if (page === totalpages - 1) {
+                        return;
+                    } else {
+                        let fffffff = items;
+                        let tempsef = resp.data.content;
+                        console.log('um array',fffffff)
+                        console.log('um array',fffffff.length)
+                        console.log('outro array',tempsef)
+                        console.log('outro array',tempsef.length)
+                        let last =  tempsef.concat(fffffff);
+                        console.log('depois',last.length)
+                        setItems(last)
+                    }
                 } else {
                     setItems(resp.data.content)
                 }
+
+                setControl(!control)
             })
 
     }
@@ -63,21 +78,34 @@ function List({navigation}) {
     }
 
     const handleDeleteItem = (item) => {
-        console.log('deletar esse', item.id);
         api
             .delete(`product/delete/${item.id}`, {
                 headers: {
-                    authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA1Mjg0MTgsImlhdCI6MTYyMDQ4NTIxOH0.2ppNusxsbQ1in1PYLuRPPkVtQ37kYuA2ieK6Leg9LpGNEMbW8gUvsBYHhDuME5akExn4IS5s660vnbLGFneZeQ`
+                    authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`
                 }
             })
             .then((resp) => {
                 loadList();
-                console.log('item deletado')
+                console.log('item deletado');
             })
+
+        for( var i = 0; i < items.length; i++){ 
+
+            if ( items[i].id === item.id) { 
+        
+                items.splice(i, 1); 
+            }
+        
+        }
+
     }
 
     const chegandoNoFinal = () => {
         loadList();
+    }
+
+    const handleEdit = (item) => {
+        navigation.navigate('createItem', item)
     }
 
     return (
@@ -94,6 +122,7 @@ function List({navigation}) {
                             price={item.price}
                             ingredients={item.ingredients}
                             onPressX={() => handleDeleteItem(item)}
+                            onPressEdit={() => handleEdit(item)}
                         />
                     )}
                 />

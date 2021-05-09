@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -14,9 +14,10 @@ import styles from './styles';
 import api from '../../services/api';
 import colors from '../../utils/colors';
 
-const CreateItem = ({navigation}) => {
+const CreateItem = ({navigation, route}) => {
     const [ingredientes, setIngredientes] = useState(false);
     const [updateList, setUpdateList] = useState(false);
+    const [control, setControl] = useState(false);
 
     const { token } = useSelector(store => store.user);
 
@@ -35,19 +36,55 @@ const CreateItem = ({navigation}) => {
         quantity: 0
     })
 
+    console.log(route.params);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // setInfo()
+        });
+        
+        return unsubscribe;
+    }, [navigation])
+
+        console.log('aqui')
+
+        if (route.params && !control) {
+
+            data.price = route.params.price.toString(),
+            data.id = route.params.id,
+            data.image = route.params.image,
+            data.name = route.params.name,
+
+            route.params.ingredients.map((item) => {
+
+                ingrediente.id = item.id,
+                ingrediente.cost = item.cost,
+                ingrediente.name = item.name,
+                ingrediente.quantity = item.quantity
+
+                data.ingredients.push(ingrediente)
+
+            })
+            setControl(!control)
+
+            console.log(data.ingredients)
+        }
+
     const handleCreateItem = () => {
        console.log('dentro', data)
        
        api
        .post('product/save',data, {
            headers: {
-            authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA1Mjg0MTgsImlhdCI6MTYyMDQ4NTIxOH0.2ppNusxsbQ1in1PYLuRPPkVtQ37kYuA2ieK6Leg9LpGNEMbW8gUvsBYHhDuME5akExn4IS5s660vnbLGFneZeQ`
+            authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTciLCJleHAiOjE2MjA2MDQ4OTcsImlhdCI6MTYyMDU2MTY5N30.gRSJlVJR3DyKGKK1vwtmEcy-fQVLM_8obvfo5ZkpurD-8ij2Rnxredj8mIhIaMAzSVEk3v6mxlscqf-6fFxvyw`
            }
        })
        .then((resp) => {
            console.log('produto cadastrado')
            Alert.alert('Sucesso')
            navigation.navigate('list');
+       }).catch((err) => {
+           Alert.alert('Erro ao salvar edição :(')
        })
     }
 
@@ -63,10 +100,9 @@ const CreateItem = ({navigation}) => {
         <View style={styles.container}>
             <Text style={styles.title}>Cadastrar item</Text>
                 <Input 
-                    value={data}
+                    value={data.image}
                     placeHolder='Url imagem'
-                    keyboardType='numeric'
-                    onChangeText={(text) => setData({...data, price: text})}
+                    onChangeText={(text) => setData({...data, image: text})}
                 />
                 <Input 
                     value={data.name}
