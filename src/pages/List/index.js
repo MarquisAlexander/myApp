@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import {Input, Button} from '../../components';
 import api from '../../services/api';
 import styles from './styles';
@@ -42,8 +43,6 @@ function List({navigation}) {
       console.log('estou aqui', page);
     }
 
-    console.log('prestes a fazer a consulta', page);
-
     api
       .get(`product/list?page=${page}`, {
         headers: {
@@ -58,20 +57,15 @@ function List({navigation}) {
         if (page !== 0) {
           let fffffff = items;
           let tempsef = resp.data.content;
-          console.log('um array', fffffff);
-          console.log('um array', fffffff.length);
-          console.log('outro array', tempsef);
-          console.log('outro array', tempsef.length);
           let last = tempsef.concat(fffffff);
-          console.log('depois', last.length);
           setItems(last);
         } else {
           setItems(resp.data.content);
         }
 
+        setLoadingMore(false);
         setControl(!control);
-      })
-      .finally(() => {
+      }).finally(() => {
         setRefresh(false);
       });
   };
@@ -110,26 +104,22 @@ function List({navigation}) {
   return (
     <>
       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          height: 60,
-          alignItems: 'center',
-        }}>
-        <Text>Olá {user}, Bem vindo!</Text>
-        <TouchableOpacity
-            onPress={() => navigation.navigate('home')}
-        >
-          <Text>SAIR</Text>
+        style={styles.header}>
+        <Text style={styles.textHeader}>Olá {user}, Bem vindo!</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <Icon name="log-out" size={24} color={colors.delete} />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
-
-      {items.length === 0 && !loading && (
-        <View>
-          <Text>Nada encontrado</Text>
-        </View>
-      )}
+        {items.length === 0 && !loading ? (
+          <View style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text>Nada encontrado</Text>
+          </View>
+        ) : null}
         <FlatList
           data={items}
           onEndReached={() => chegandoNoFinal()}
@@ -147,9 +137,11 @@ function List({navigation}) {
             />
           )}
           ListFooterComponent={
-            loadingMore ?
-            <ActivityIndicator color={colors.green} size={30}/>
-            : <></>
+            loadingMore ? (
+              <ActivityIndicator color={colors.green} size={30} />
+            ) : (
+              <></>
+            )
           }
         />
       </View>

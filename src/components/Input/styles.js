@@ -3,6 +3,7 @@ import {
     StyleSheet
 } from 'react-native'
 import colors from '../../utils/colors';
+import fonts from '../../utils/fonts';
 import { resize } from '../../utils/resize';
 
 const { width, height } = Dimensions.get('window');
@@ -20,7 +21,8 @@ const styles = StyleSheet.create({
         color: "#000",
         paddingHorizontal: (width * 5) / 100,
         width: '100%',
-        fontSize: resize(16)
+        fontSize: resize(16),
+        fontFamily: fonts.Regular
     }
 })
 

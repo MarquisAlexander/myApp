@@ -1,14 +1,11 @@
 import {
-    Dimensions,
     StyleSheet
 } from 'react-native'
 import colors from '../../utils/colors';
-
-const { width, height } = Dimensions.get('window');
+import fonts from '../../utils/fonts';
 
 const styles = StyleSheet.create({
     container: {
-        // borderWidth: 1,
         borderColor: "#000",
         borderRadius: 5,
         marginTop: 5,
@@ -19,6 +16,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: colors.white,
+        fontFamily: fonts.Bold
     }
 })
 

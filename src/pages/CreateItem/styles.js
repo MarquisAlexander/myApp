@@ -2,6 +2,7 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native'
+import fonts from '../../utils/fonts';
 import { resize } from '../../utils/resize';
 
 const { width, height } = Dimensions.get('window');
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 5,
-        // alignItems: 'center',
+        paddingTop: 20,
         width: width,
     },
     title: {
@@ -25,12 +26,12 @@ const styles = StyleSheet.create({
         paddingVertical: 20
     },
     textAddIngredients: {
-        fontSize: resize(24)
+        fontSize: resize(24),
+        fontFamily: fonts.SemiBold
     },
     containerIngredients: {
-        // width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     }
 })
 

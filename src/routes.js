@@ -23,12 +23,13 @@ function Routes() {
                     name="home" 
                     component={Login}
                 />
-
-
-
                 <Stack.Screen 
                     name="createItem" 
-                    component={CreateItem} 
+                    component={CreateItem}
+                    options={{
+                        headerShown: true,
+                        headerTitle: 'Cadastrar item'
+                    }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
