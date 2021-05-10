@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import colors from '../../utils/colors';
 import styles from './styles';
+import { maskMoney } from '../../utils/formatPrice';
 
 export default function CardList({
   onPressX,
@@ -11,11 +12,12 @@ export default function CardList({
   price,
   ingredients = [],
 }) {
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.containerContent}>
         <Text style={styles.text}>Nome: {title} </Text>
-        <Text style={styles.text}>Preço: {price}</Text>
+        <Text style={styles.text}>Preço: {maskMoney(price)}</Text>
       </View>
 
       <View style={styles.containerContent}>
