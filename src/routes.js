@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './pages/Login ';
+import Login from './pages/Login';
 import List from './pages/List';
 import CreateItem from './pages/CreateItem';
 
